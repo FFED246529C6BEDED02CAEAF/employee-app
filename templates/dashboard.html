@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Welcome, {{ employee_name }}!</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+        <li><a href="{{ url_for('tasks') }}">Tasks</a></li>
+        <li><a href="{{ url_for('timesheets') }}">Timesheets</a></li>
+        <li><a href="{{ url_for('paystubs') }}">Paystubs</a></li>
+        <li><a href="{{ url_for('leave_requests') }}">Leave Requests</a></li>
+        <li><a href="{{ url_for('announcements') }}">Announcements</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="information-cards">
+      <h2>At a Glance</h2>
+      <div class="card">
+        <h3>Upcoming Tasks</h3>
+        <span>{{ upcoming_tasks_count }}</span>
+      </div>
+      <div class="card">
+        <h3>Pending Approvals</h3>
+        <span>{{ pending_approvals_count }}</span>
+      </div>
+      <div class="card">
+        <h3>Performance Rating</h3>
+        <span>{{ performance_rating }}</span>
+      </div>
+    </section>
+    <section class="interactive-elements">
+      <h2>Recent Announcements</h2>
+      <ul>
+        {% for announcement in recent_announcements %}
+          <li>{{ announcement.title }}</li>
+        {% endfor %}
+      </ul>
+      <h2>Submit Leave Request</h2>
+      <form action="{{ url_for('submit_leave_request') }}" method="post">
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+    <section class="charts-and-graphs">
+      <h2>Performance Chart</h2>
+      <canvas id="performance-chart"></canvas>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
